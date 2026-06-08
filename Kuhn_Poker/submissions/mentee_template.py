@@ -18,4 +18,4 @@ class MenteeKuhnBot:
         # Example heuristic logic:
         if state.my_card == 'K': return 'b'
         if state.my_card == 'J': return 'p'
-        return random.choice(['p', 'b'])
+        return random.choice(['p', 'b'])   
