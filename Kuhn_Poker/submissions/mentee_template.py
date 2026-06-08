@@ -31,7 +31,7 @@ class perkeo:
             if state.history == 'b' or state.history == 'pb':
                 return 'p'
             else:
-                if rand< bluff_jack
+                if rand< bluff_jack:
                     return 'b'    #bluffing when the opponent did not bet
                 else:
                     return 'p'
