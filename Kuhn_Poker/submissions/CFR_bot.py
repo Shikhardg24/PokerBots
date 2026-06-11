@@ -90,12 +90,12 @@ class neBot:
             accumulate = i > burn_in
             self._cfr(cards, "", 1.0, 1.0, accumulate)
             
-        print("\n CFR ")
-        for key in sorted(self.strategy_sum.keys()):
-            total = sum(self.strategy_sum[key])
-            if total > 0:
-                avg = [round(s/total, 3) for s in self.strategy_sum[key]]
-                print(f"  {key}: p={avg[0]}, b={avg[1]}")
+        # print("\n CFR ")
+        # for key in sorted(self.strategy_sum.keys()):
+        #     total = sum(self.strategy_sum[key])
+        #     if total > 0:
+        #         avg = [round(s/total, 3) for s in self.strategy_sum[key]]
+        #         print(f"  {key}: p={avg[0]}, b={avg[1]}")
 
     def get_action(self, state) -> str:
         key = self._get_info_key(state.my_card, state.history)

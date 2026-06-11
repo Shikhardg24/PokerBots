@@ -1,6 +1,6 @@
 import random
 
-from panel import state
+# from panel import state
 
 class SacrosanctBot:
     """

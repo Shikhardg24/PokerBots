@@ -5,33 +5,33 @@ import itertools
 from engine import KuhnEngine
 
 def load_all_bots(directory_name="submissions"):
-    """Dynamically loads all bot classes from the submissions folder."""
     bots = []
-    
-    # 1. Get the absolute path to the folder where arena.py is currently located
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    
-    # 2. Join it with the submissions folder name
     target_directory = os.path.join(current_dir, directory_name)
     
-    # 3. Check if the directory exists to prevent crashes
     if not os.path.exists(target_directory):
         print(f"Error: Could not find the directory at {target_directory}")
         return bots
 
     for filename in os.listdir(target_directory):
         if filename.endswith(".py") and filename != "__init__.py":
-            # Python importlib still requires the relative module path format
             module_name = f"{directory_name}.{filename[:-3]}"
-            module = importlib.import_module(module_name)
             
-            # Find any class in the file that has a get_action method
+            # --- THE BULLETPROOF IMPORT BLOCK ---
+            try:
+                module = importlib.import_module(module_name)
+            except Exception as e:
+                # If they import 'panel' or have a syntax error, catch it here
+                print(f"[DISQUALIFIED] Skipping {filename} due to import error: {e}")
+                continue 
+            # ------------------------------------
+
             for name, obj in inspect.getmembers(module, inspect.isclass):
                 if hasattr(obj, 'get_action') and name != 'GameState':
                     try:
-                        bots.append(obj()) # Instantiate the bot
+                        bots.append(obj()) 
                     except Exception as e:
-                        print(f"Failed to load {name}: {e}")
+                        print(f"Failed to load class {name} in {filename}: {e}")
     return bots
 
 def run_round_robin():
